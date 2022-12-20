@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TestDBModelStoreContainer" CdmEntityContainer="TestDBEntities">
+    <EntitySetMapping Name="ActivityFile">
+      <EntityTypeMapping TypeName="TestDBModel.ActivityFile">
+        <MappingFragment StoreEntitySet="ActivityFile">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="MID" ColumnName="MID" />
+          <ScalarProperty Name="Filename" ColumnName="Filename" />
+          <ScalarProperty Name="Created" ColumnName="Created" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Media">
+      <EntityTypeMapping TypeName="TestDBModel.Media">
+        <MappingFragment StoreEntitySet="Media">
+          <ScalarProperty Name="MID" ColumnName="MID" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="LinkType" ColumnName="LinkType" />
+          <ScalarProperty Name="Yearx" ColumnName="Yearx" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="FullPath" ColumnName="FullPath" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<link href="~/Areas/Education/Data/Content/PagedList.css" rel="stylesheet" />
+
+<div style="margin: 15px;">
+    <p><a href="/">首頁</a> > <a href="#">活動花絮管理</a></p>
+</div>
+
+<section class="containerArea">
+
+    <div class="container card" style="margin-top:10px;">
+
+        <div class="titleText">
+            <h2>活動花絮管理</h2>
+        </div>
+        <br />
+
+        <p style="text-align:center;color:red">@TempData["result"] </p>
+
+
+        <div style="display:flex;justify-content:space-between;">
+            <a class="btn btn-primary" href="@Url.Action("Create","Home")">新增活動花絮</a>
+            <div>
+                <div style="display:inline-block;position:relative;">
+                    <div style="position:absolute;right:8px;top:8px;cursor:pointer;display:none;" class="input_clear">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            ×
+                        </button>
+                    </div>
+                    <input type="text" id="txtname" name="Empname" class="input-text w200 form-control" aria-describedby="basic-addon1" style="height:35px;" placeholder="請輸入關鍵字" />
+                </div>
+                <button id="btnsearch" class="btn btn-info" style="vertical-align:baseline;">搜尋</button>
+            </div>
+        </div>
+
+
+
+        <br />
+
+
+
+        @Html.Action("GetData")
+
+    </div>
+</section>
+
+
+@section scripts{
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function () {
+            $(document).on("click", "#contentPager a[href]", function () {
+                var name = $("#txtname").val();
+                $.ajax({
+                    url: $(this).attr("href"),
+                    data: { txtsearch: name },
+                    type: 'GET',
+                    cache: false,
+                    success: function (result) {
+                        $('#content').html(result);
+                    }
+                });
+                return false;
+            });
+
+            $("#btnsearch").click(function () {
+                var name = $("#txtname").val();
+                $.ajax({
+                    url: '@Url.Action("GetData", "Home")',
+                    data: { txtsearch: name },
+                    type: 'GET',
+                    cache: false,
+                    success: function (result) {
+                        $('#content').html(result);
+                    }
+                });
+            });
+
+        });
+    </script>
+}
+
+
+<script>
+    $(document).ready(function () {
+        $("input").focus(function () {
+            $(this).parent().children(".input_clear").show();
+        });
+        $("input").blur(function () {
+            if ($(this).val() == '') {
+                $(this).parent().children(".input_clear").hide();
+            }
+        });
+        $(".input_clear").click(function () {
+            $(this).parent().find('input').val('');
+            $(this).hide();
+        });
+    });
+</script>

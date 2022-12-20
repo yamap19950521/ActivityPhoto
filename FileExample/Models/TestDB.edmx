@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TestDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ActivityFile">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MID" Type="int" Nullable="false" />
+          <Property Name="Filename" Type="nvarchar(max)" />
+          <Property Name="Created" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Media">
+          <Key>
+            <PropertyRef Name="MID" />
+          </Key>
+          <Property Name="MID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Category" Type="int" Nullable="false" />
+          <Property Name="LinkType" Type="int" Nullable="false" />
+          <Property Name="Yearx" Type="varchar" MaxLength="3" />
+          <Property Name="Title" Type="nvarchar" MaxLength="15" />
+          <Property Name="FullPath" Type="nvarchar" MaxLength="20" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ActivityFile_Media">
+          <End Role="Media" Type="Self.Media" Multiplicity="1" />
+          <End Role="ActivityFile" Type="Self.ActivityFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Media">
+              <PropertyRef Name="MID" />
+            </Principal>
+            <Dependent Role="ActivityFile">
+              <PropertyRef Name="MID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestDBModelStoreContainer">
+          <EntitySet Name="ActivityFile" EntityType="Self.ActivityFile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Media" EntityType="Self.Media" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ActivityFile_Media" Association="Self.FK_ActivityFile_Media">
+            <End Role="Media" EntitySet="Media" />
+            <End Role="ActivityFile" EntitySet="ActivityFile" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TestDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ActivityFile">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MID" Type="Int32" Nullable="false" />
+          <Property Name="Filename" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Created" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Media" Relationship="Self.FK_ActivityFile_Media" FromRole="ActivityFile" ToRole="Media" />
+        </EntityType>
+        <EntityType Name="Media">
+          <Key>
+            <PropertyRef Name="MID" />
+          </Key>
+          <Property Name="MID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Category" Type="Int32" Nullable="false" />
+          <Property Name="LinkType" Type="Int32" Nullable="false" />
+          <Property Name="Yearx" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="FullPath" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ActivityFile" Relationship="Self.FK_ActivityFile_Media" FromRole="Media" ToRole="ActivityFile" />
+        </EntityType>
+        <Association Name="FK_ActivityFile_Media">
+          <End Role="Media" Type="Self.Media" Multiplicity="1" />
+          <End Role="ActivityFile" Type="Self.ActivityFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Media">
+              <PropertyRef Name="MID" />
+            </Principal>
+            <Dependent Role="ActivityFile">
+              <PropertyRef Name="MID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ActivityFile" EntityType="Self.ActivityFile" />
+          <EntitySet Name="Media" EntityType="Self.Media" />
+          <AssociationSet Name="FK_ActivityFile_Media" Association="Self.FK_ActivityFile_Media">
+            <End Role="Media" EntitySet="Media" />
+            <End Role="ActivityFile" EntitySet="ActivityFile" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TestDBModelStoreContainer" CdmEntityContainer="TestDBEntities">
+          <EntitySetMapping Name="ActivityFile">
+            <EntityTypeMapping TypeName="TestDBModel.ActivityFile">
+              <MappingFragment StoreEntitySet="ActivityFile">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="MID" ColumnName="MID" />
+                <ScalarProperty Name="Filename" ColumnName="Filename" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Media">
+            <EntityTypeMapping TypeName="TestDBModel.Media">
+              <MappingFragment StoreEntitySet="Media">
+                <ScalarProperty Name="MID" ColumnName="MID" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="LinkType" ColumnName="LinkType" />
+                <ScalarProperty Name="Yearx" ColumnName="Yearx" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FullPath" ColumnName="FullPath" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
